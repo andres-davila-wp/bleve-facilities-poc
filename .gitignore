@@ -1,0 +1,13 @@
+bin/
+dist/
+*.exe
+*.test
+*.out
+vendor/
+
+.env
+.env.*
+
+# Bleve index written at runtime
+*.bleve/
+index/
