@@ -29,6 +29,72 @@ sequenceDiagram
 
 The number Elasticsearch reports as `took` is only the time inside the cluster, after the query arrives. On stage that was 4 ms for `Greene` and 4 ms for the distance search. Read `took` in Kibana Dev Tools, not in Postman. Postman against stage measures the full trip and also needs a Cloudflare Access session. The API, including that call, DynamoDB, and the second search, responded in 34 ms. Swagger showed 272 ms because that includes the trip from the laptop to stage.
 
+Stage Kibana Dev Tools: [https://vpc-retail-services-stage-shhcybmu6wylysybb4zzgv6bja.us-east-1.es.amazonaws.com/_plugin/kibana/app/dev_tools#/console](https://vpc-retail-services-stage-shhcybmu6wylysybb4zzgv6bja.us-east-1.es.amazonaws.com/_plugin/kibana/app/dev_tools#/console)
+
+These are the two console requests that produced the Elasticsearch times in the table. `Greene` searches name fields only.
+
+```
+GET facilities_v2_20250416_154800/_search
+{
+  "size": 10,
+  "_source": ["id", "name"],
+  "query": {
+    "bool": {
+      "filter": [
+        { "term": { "isActive": true } },
+        { "term": { "hasLaunched": true } }
+      ],
+      "should": [
+        {
+          "multi_match": {
+            "query": "Greene",
+            "type": "bool_prefix",
+            "fields": [
+              "name.keyword^10",
+              "name.search",
+              "name.search._2gram",
+              "name.search._3gram",
+              "name.search._index_prefix"
+            ]
+          }
+        }
+      ],
+      "minimum_should_match": 1
+    }
+  }
+}
+```
+
+```
+GET facilities_v2_20250416_154800/_search
+{
+  "size": 10,
+  "query": {
+    "bool": {
+      "filter": [
+        { "term": { "isActive": true } },
+        { "term": { "hasLaunched": true } },
+        {
+          "geo_distance": {
+            "distance": "25mi",
+            "location": { "lat": 40.726, "lon": -73.996 }
+          }
+        }
+      ]
+    }
+  },
+  "sort": [
+    {
+      "_geo_distance": {
+        "location": { "lat": 40.726, "lon": -73.996 },
+        "order": "asc",
+        "unit": "mi"
+      }
+    }
+  ]
+}
+```
+
 ## Bleve
 
 Bleve is a library. "Local" means the index lives in the memory of the API process, so the API does not call another service to get the ids. The browser still calls the API in AWS, and DynamoDB still loads each facility. Those two steps stay either way.
