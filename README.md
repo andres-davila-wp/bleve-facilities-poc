@@ -8,7 +8,7 @@ Two searches were compared. `Greene` is a word search. The other is facilities w
 
 ## Elasticsearch
 
-Elasticsearch is a separate service. The API sends it the query over the network and gets back ids and distance. It then loads each facility from DynamoDB, and makes a second call to the old v1 index for appointment-type options.
+Elasticsearch is a separate service. The API sends it the query over the network and gets back ids. Geolocation is a filter and a sort inside that same `POST /v2/facilities/search` query, so replacing it means replacing that part of the query. The API then loads each facility from DynamoDB and makes a second call to the old v1 index for appointment-type options.
 
 ```mermaid
 sequenceDiagram
@@ -58,7 +58,7 @@ This program is only the Bleve lookup. It loads the facilities and returns ids. 
 
 On the word search, Bleve is faster. On the distance search, both engines take about 4 ms and return RBPK first. Bleve places that facility about 0.16 miles away.
 
-The word queries were not identical: the Elasticsearch timing searched name fields, and Bleve also matches the street, so it returns an extra facility. The distance query used the same point, radius, and filters. The old v1 index was not timed on its own. The stage export used for the Bleve run stays on the machine that ran it and is not in this repository. The Elasticsearch queries in retail-services were not modified.
+The word queries were not identical: the Elasticsearch timing searched name fields, and Bleve also matches the street, so it returns an extra facility. The distance query used the same point, radius, and filters. The Kibana timing did not include the appointment-type aggregation the API always sends, and production and a load test were not measured. On this 553-facility index those still sit in milliseconds. The old v1 index was not timed on its own. The `distance` field on the API response is the Elasticsearch score; the miles above come from Bleve. The stage export used for the Bleve run stays on the machine that ran it and is not in this repository. The Elasticsearch queries in retail-services were not modified.
 
 ```bash
 go test .
