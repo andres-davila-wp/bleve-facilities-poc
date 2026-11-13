@@ -1,0 +1,85 @@
+{
+  "info": {
+    "name": "POC - Blevesearch",
+    "description": "RB-285 local comparison. Bleve requests hit the process started with `go run . -serve -data testdata/facilities-stage.json`. Stage requests hit the current POST /v2/facilities/search. Postman time on stage is the full trip. On Bleve, read tookMs in the body for the search itself. Stage may require the same browser session used to open Swagger.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Bleve - Greene",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "url": {
+          "raw": "http://127.0.0.1:8787/v2/facilities/search?term=Greene&size=10",
+          "protocol": "http",
+          "host": ["127", "0", "0", "1"],
+          "port": "8787",
+          "path": ["v2", "facilities", "search"],
+          "query": [
+            {"key": "term", "value": "Greene"},
+            {"key": "size", "value": "10"}
+          ]
+        }
+      }
+    },
+    {
+      "name": "Bleve - Coordinates",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "url": {
+          "raw": "http://127.0.0.1:8787/v2/facilities/search?lat=40.726&long=-73.996&distanceFilter=25&distanceMeasure=mi&size=10",
+          "protocol": "http",
+          "host": ["127", "0", "0", "1"],
+          "port": "8787",
+          "path": ["v2", "facilities", "search"],
+          "query": [
+            {"key": "lat", "value": "40.726"},
+            {"key": "long", "value": "-73.996"},
+            {"key": "distanceFilter", "value": "25"},
+            {"key": "distanceMeasure", "value": "mi"},
+            {"key": "size", "value": "10"}
+          ]
+        }
+      }
+    },
+    {
+      "name": "Stage - Greene",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "url": {
+          "raw": "https://cms.stage.warby.io/api/retail/v2/facilities/search?term=Greene&size=10",
+          "protocol": "https",
+          "host": ["cms", "stage", "warby", "io"],
+          "path": ["api", "retail", "v2", "facilities", "search"],
+          "query": [
+            {"key": "term", "value": "Greene"},
+            {"key": "size", "value": "10"}
+          ]
+        }
+      }
+    },
+    {
+      "name": "Stage - Coordinates",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "url": {
+          "raw": "https://cms.stage.warby.io/api/retail/v2/facilities/search?lat=40.726&long=-73.996&distanceFilter=25&distanceMeasure=mi&size=10",
+          "protocol": "https",
+          "host": ["cms", "stage", "warby", "io"],
+          "path": ["api", "retail", "v2", "facilities", "search"],
+          "query": [
+            {"key": "lat", "value": "40.726"},
+            {"key": "long", "value": "-73.996"},
+            {"key": "distanceFilter", "value": "25"},
+            {"key": "distanceMeasure", "value": "mi"},
+            {"key": "size", "value": "10"}
+          ]
+        }
+      }
+    }
+  ]
+}

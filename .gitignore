@@ -11,3 +11,6 @@ vendor/
 # Bleve index written at runtime
 *.bleve/
 index/
+
+# Stage search export. Keep it local.
+testdata/facilities-stage.json

@@ -1,0 +1,58 @@
+[
+  {
+    "id": "RGRN",
+    "name": "Greene St",
+    "streetAddress": "121 Greene St",
+    "postalCode": "10012",
+    "locality": "New York",
+    "storeNumber": "001",
+    "countryCode": "US",
+    "type": "retail",
+    "isActive": true,
+    "hasLaunched": true,
+    "lat": 40.7256,
+    "lon": -73.9966
+  },
+  {
+    "id": "RBDY",
+    "name": "Broadway",
+    "streetAddress": "120 Broadway",
+    "postalCode": "10006",
+    "locality": "New York",
+    "storeNumber": "002",
+    "countryCode": "US",
+    "type": "retail",
+    "isActive": true,
+    "hasLaunched": true,
+    "lat": 40.7081,
+    "lon": -74.013
+  },
+  {
+    "id": "RLAX",
+    "name": "Los Angeles",
+    "streetAddress": "100 Sunset Blvd",
+    "postalCode": "90028",
+    "locality": "Los Angeles",
+    "storeNumber": "003",
+    "countryCode": "US",
+    "type": "retail",
+    "isActive": true,
+    "hasLaunched": true,
+    "lat": 34.0522,
+    "lon": -118.2437
+  },
+  {
+    "id": "RLAB",
+    "name": "Greene Lab",
+    "streetAddress": "1 Greene St",
+    "postalCode": "10012",
+    "locality": "New York",
+    "storeNumber": "004",
+    "countryCode": "US",
+    "type": "lab",
+    "isActive": false,
+    "hasLaunched": true,
+    "lat": 40.72605,
+    "lon": -73.99605
+  }
+]
